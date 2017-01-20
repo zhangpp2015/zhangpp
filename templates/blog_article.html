@@ -1,0 +1,65 @@
+{% extends 'blog_base.html' %}
+{% block blog_left_content %}
+<div class="main_content">
+    <div class="block_breadcrumbs">
+        <div class="text"><p>You are here:</p></div>
+
+        <ul>
+            <li><a href="">Home</a></li>
+            <li>{{ article.title }}</li>
+        </ul>
+    </div>
+    <div class="separator" style="height:30px;"></div>
+
+    <article class="block_single_post">
+      <p class="title">{{ article.title }}</p>
+        <p class="subtitle">{{ article.desc }}</p>
+
+        <div class="info">
+            <div class="date"><p>{{ article.date_publish | date:'d-M-y' }}</p></div>
+            <div class="author"><p>By: <a href="#">{{ article.user }}</a></p></div>
+
+            <div class="r_part">
+                <div class="category"><p>category: <a href="{% url 'category' %}?category={{ article.category_id }}">{{ article.category }}</a></p></div>
+                <a href="#" class="views">{{ article.click_count }}</a>
+            </div>
+        </div>
+
+        <div class="content">
+            <p>{{ article.content | safe }}</p>
+        </div>
+
+        <div class="line_3" style="margin:4px 0px 23px;"></div>
+
+    </article>
+
+    <div class="block_post_tags">
+        <p>Tags:
+            {% for tag in article.tag.all %}
+            <a href="{% url 'tag' %}?tag={{ tag.id }}" rel="tag">{{ tag.name }}&nbsp;&nbsp;</a>
+            {% endfor %}
+        </p>
+    </div>
+
+    <div class="line_2" style="margin:5px 0px 28px;"></div>
+
+    <!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="{{ article.id }}" data-title="{{ article.title }}" data-url="http://zhangpp.applinzi.com/article?id={{ article.id }}"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"zhangpp"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0]
+             || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+    <!-- 多说公共JS代码 end -->
+
+
+</div>
+{% endblock %}

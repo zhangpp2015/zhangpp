@@ -1,0 +1,60 @@
+{% extends 'blog_base.html' %}
+{% block blog_left_content %}
+<div class="main_content">
+    <div class="block_breadcrumbs">
+        <div class="text"><p>You are here:</p></div>
+
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li>Registration</li>
+        </ul>
+    </div>
+    <div class="separator" style="height:28px;"></div>
+    <p class="general_title"><span>Join The Conversation</span></p>
+    <div class="separator" style="height:39px;"></div>
+
+    <div class="block_registration">
+        <form action="{% url 'reg' %}" method="post" class="w_validation" />
+        {% csrf_token %}
+            <div class="col_1">
+                <div class="label"><p>Username<span>*</span>:</p></div>
+                <div class="field"><input type="text" class="req" name="username" required/></div>
+                <div class="clearboth"></div>
+                <div class="separator" style="height:14px;"></div>
+
+                <div class="label"><p>E-mail<span>*</span>:</p></div>
+                <div class="field"><input type="text" class="req" name="email" required/></div>
+                <div class="clearboth"></div>
+                <div class="separator" style="height:12px;"></div>
+
+                <div class="label"><p>Password<span>*</span>:</p></div>
+                <div class="field"><input type="password" class="req" name="password" required/></div>
+                <div class="clearboth"></div>
+                <div class="separator" style="height:12px;"></div>
+
+                <div class="label"><p>Confirm Password<span>*</span>:</p></div>
+                <div class="field"><input type="password" class="req" name="repassword" required/></div>
+                <div class="clearboth"></div>
+                <div class="separator" style="height:12px;"></div>
+
+
+                <div class="label"><p>Url:</p></div>
+                <div class="field"><input type="text" name="url"/></div>
+                <div class="clearboth"></div>
+                <div class="separator" style="height:12px;"></div>
+
+            </div>
+
+                <div class="clearboth"></div>
+                <div class="separator" style="height:32px;"></div>
+
+                <p class="info_text">By clicking on the button "Register" you agree to be the terms of service </p>
+                <p class="info_text"><input type="submit" class="general_button" value="Register On Site" /></p>
+                <p class="info_text">You can register for an account through other social networks</p>
+            </form>
+        </div>
+
+        <div class="line_3" style="margin:42px 0px 0px;"></div>
+    <div class="clearboth"></div>
+</div>
+{% endblock %}
