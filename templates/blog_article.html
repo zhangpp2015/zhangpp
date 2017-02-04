@@ -20,7 +20,7 @@
             <div class="author"><p>By: <a href="#">{{ article.user }}</a></p></div>
 
             <div class="r_part">
-                <div class="category"><p>category: <a href="{% url 'category' %}?category={{ article.category_id }}">{{ article.category.name }}</a></p></div>
+                <div class="category"><p>category: <a href="{% url 'category' %}?category={{ article.category_id }}">{{ article.category }}</a></p></div>
                 <a href="#" class="views">{{ article.click_count }}</a>
             </div>
         </div>
