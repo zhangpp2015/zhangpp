@@ -109,7 +109,7 @@ else:
 DATABASES = {
     'default': {
     'ENGINE': 'django.db.backends.mysql',
-    'NAME': 'blog',
+    'NAME': 'blog_db',
     'USER': 'root',
     'PASSWORD': 'mysql123',
     'HOST': '127.0.0.1',
