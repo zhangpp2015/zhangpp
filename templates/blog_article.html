@@ -33,13 +33,6 @@
 
     </article>
 
-    <div class="block_post_tags">
-        <p>Tags:
-            {% for tag in article.tag.all %}
-            <a href="{% url 'tag' %}?tag={{ tag.id }}" rel="tag">{{ tag.name }}&nbsp;&nbsp;</a>
-            {% endfor %}
-        </p>
-    </div>
 
     <div class="line_2" style="margin:5px 0px 28px;"></div>
 
