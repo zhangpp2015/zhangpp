@@ -20,7 +20,7 @@ class User(AbstractUser):
         verbose_name_plural = verbose_name
         ordering = ['-id']
 
-    def __unicode__(self):
+    def __str__ (self):    # __unicode__ on Python 2
         return self.username
 
 # 标签
@@ -32,7 +32,7 @@ class Tag(models.Model):
         verbose_name_plural = verbose_name
         ordering = ['id']
 
-    def __unicode__(self):
+    def __str__(self):  # __unicode__ on Python 2
         return self.name
 
 # 文章分类
@@ -45,7 +45,7 @@ class Category(models.Model):
         verbose_name_plural = verbose_name
         ordering = ['index', 'id']
 
-    def __unicode__(self):
+    def __str__(self):  # __unicode__ on Python 2
         return self.name
 
 #自定义一个文章model的管理器
@@ -79,7 +79,7 @@ class Article(models.Model):
         verbose_name_plural = verbose_name
         ordering = ['-date_publish']
 
-    def __unicode__(self):
+    def __str__(self):  # __unicode__ on Python 2
         return self.title
 
 # 评论模型
@@ -98,7 +98,7 @@ class Comment(models.Model):
         verbose_name_plural = verbose_name
         ordering = ['-date_publish']
 
-    def __unicode__(self):
+    def __str__(self):  # __unicode__ on Python 2
         return str(self.id)
 
 # 友情链接
@@ -114,7 +114,7 @@ class Links(models.Model):
         verbose_name_plural = verbose_name
         ordering = ['index', 'id']
 
-    def __unicode__(self):
+    def __str__(self):  # __unicode__ on Python 2
         return self.title
 
 # 广告
@@ -131,5 +131,5 @@ class Ad(models.Model):
         verbose_name_plural = verbose_name
         ordering = ['index', '-id']
 
-    def __unicode__(self):
+    def __str__(self):  # __unicode__ on Python 2
         return self.title
