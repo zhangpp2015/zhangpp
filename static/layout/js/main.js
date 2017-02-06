@@ -1,5 +1,3 @@
-/* browser selection */
-var ie8 = ($.browser.msie && $.browser.version == '8.0') ? true : false;
 
 /* mobile */
 var isMobile = false;
@@ -160,46 +158,6 @@ function init_iframe_size() {
 	});
 }
 
-function init_fields() {
-	$('.w_def_text').each(function() {
-		var text = $(this).attr('title');
-		
-		if($(this).val() == '') {
-			$(this).val(text);
-		}
-	});
-	
-	$('.w_def_text').live('click', function() {
-		var text = $(this).attr('title');
-		
-		if($(this).val() == text) {
-			$(this).val('');
-		}
-		
-		$(this).focus();
-	});
-	
-	$('.w_def_text').live('blur', function() {
-		var text = $(this).attr('title');
-		
-		if($(this).val() == '') {
-			$(this).val(text);
-		}
-	});
-	
-	$('.custom_select').each(function() {
-		$(this).css('opacity', '0');
-		$(this).parent().append('<span />');
-		var text = $(this).find('option:selected').html();
-		$(this).parent().find('span').html(text);
-	});
-	
-	$('.custom_select').live('change', function() {
-		var text = $(this).find('option:selected').html();
-		$(this).parent().find('span').html(text);
-	});
-}
-
 function init_validation(target) {
 	function validate(target) {
 		var valid = true;
@@ -214,22 +172,9 @@ function init_validation(target) {
 		});
 		return valid;
 	}
-	
-	$('form.w_validation').live('submit', function(e) {
-		var valid = validate(this);
-		if(!valid) e.preventDefault();
-	});
+
 	
 	if(target) {return validate(target);}
-}
-
-function init_pretty_photo() {
-	if(!isMobile) {
-		$("a[data-rel^='prettyPhoto']").prettyPhoto({
-			deeplinking : false,
-			keyboard_shortcuts : false
-		});
-	}
 }
 
 function add_zero(num) {
@@ -490,11 +435,6 @@ function init_pic_hover() {
 	});
 }
 
-function init_message_boxes() {
-	$('.general_info_box .close').live('click', function() {
-		$(this).parent().fadeOut(300);
-	});
-}
 
 function init_pricing_table() {
 	$('.block_pricing_table_1').each(function() {
@@ -514,13 +454,11 @@ function init_pricing_table() {
 $(document).ready(function() {
 	init_sticky_footer();
 	init_iframe_size();
-	init_fields();
 	init_r_corner();
 	init_time_n_date();
 	init_popup();
 	init_pic_hover();
 	init_validation();
-	init_message_boxes();
 	init_pricing_table();
 	
 	$('.block_to_top a').click(function(e) {
@@ -540,5 +478,4 @@ $(window).resize(function() {
 
 $(function() {
 	init_menu();
-	init_pretty_photo();
 });
