@@ -20,7 +20,7 @@ class User(AbstractUser):
         verbose_name_plural = verbose_name
         ordering = ['-id']
 
-    def __unicode__(self):
+    def __str__(self):
         return self.username
 
 # 标签
@@ -32,7 +32,7 @@ class Tag(models.Model):
         verbose_name_plural = verbose_name
         ordering = ['id']
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 # 文章分类
