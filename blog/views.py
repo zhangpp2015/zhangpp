@@ -70,6 +70,10 @@ def index(request):
         pass
     return render(request, 'blog_index.html', locals())
 
+def gogle_test(request):
+
+    return render(request, 'googlec11366ace04aa69a.html', locals())
+
 def archive(request):
     try:
         #现去获取客户端提交的信息

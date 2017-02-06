@@ -4,6 +4,7 @@ from blog.views import *
 
 urlpatterns = [
     url(r'^$', index, name='index'),
+    url(r'^googlec11366ace04aa69a.html$', gogle_test, name='index'),
     url(r'^archive$', archive, name='archive'),
     url(r'^tag$', tag, name='tag'),
     url(r'^category$', category, name='category'),
