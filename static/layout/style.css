@@ -712,6 +712,8 @@ nav.secondary_menu > ul > li:first-child > a {padding-left:0px;}
 	line-height:0px;
 }
 .block_blog_1 .blog_post .title {padding-bottom:20px;}
+.block_blog_1 .blog_post .title p.yuan {color: white;width: 20px;height: 20px;background-color: green}
+.block_blog_1 .blog_post .title p.zhuan {color: white;width: 20px;height: 20px;background-color: deepskyblue}
 .block_blog_1 .blog_post .title a:hover {color:#f24024; text-decoration:none;}
 
 .block_blog_1 .blog_post .info {height:32px; margin-bottom:17px; border-top:1px solid #f0f0f0; border-bottom:1px solid #f0f0f0;}

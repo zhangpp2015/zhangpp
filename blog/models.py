@@ -48,6 +48,7 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+
 #自定义一个文章model的管理器
 #1、新加一个数据处理的方法
 #2、改变原有的queryset
@@ -62,6 +63,7 @@ class ArticleManager(models.Manager):
         return distinct_date_list
 # 文章模型
 class Article(models.Model):
+    type_choice = ((0, '原创'), (1, '转载'),)
     title = models.CharField(max_length=50, verbose_name='文章标题')
     desc = models.CharField(max_length=50, verbose_name='文章描述')
     content = models.TextField(verbose_name='文章内容')
@@ -71,6 +73,7 @@ class Article(models.Model):
     user = models.ForeignKey(User, verbose_name='用户')
     category = models.ForeignKey(Category, blank=True, null=True, verbose_name='分类')
     tag = models.ManyToManyField(Tag, verbose_name='标签')
+    type = models.IntegerField(u'0：原创，1：转载', choices=type_choice, default=0)
 
     objects = ArticleManager()
 
