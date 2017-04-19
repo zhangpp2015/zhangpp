@@ -1,5 +1,7 @@
 {% extends 'blog_base.html' %}
 {% block blog_left_content %}
+{% load pagination_tags %}
+{% autopaginate object_list 5 %}
 <div class="main_content">
     <div class="block_breadcrumbs">
             <div class="text"><p>You are here:</p></div>
@@ -14,8 +16,8 @@
     <div class="line_4" style="margin:0px 0px 0px;"></div>
 
     <div class="block_blog_1">
-        {% if article_list %}
-        {% for article in article_list %}
+        {% if object_list %}
+        {% for article in object_list %}
         <article class="blog_post">
             <h4 class="title">
                 {% if article.type %}
@@ -48,9 +50,11 @@
         {% else %}
             <p>没有相关记录！</p>
         {% endif %}
+        <div class="text-center">
+            {% if object_list %}
+            {% paginate %}
+            {% endif %}
+        </div>
     </div>
-        {% if article_list %}
-        {% include 'pagination.html' %}
-        {% endif %}
 </div>
 {% endblock %}

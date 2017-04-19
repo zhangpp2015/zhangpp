@@ -219,52 +219,6 @@
             <p>Copyright&copy;2017 zhangpp 个人博客 All Rights Reserved. 闽ICP备16006165号-3</p>
         </div>
         </div>
-<!-- POPUP BEGIN -->
-    <div id="overlay"></div>
-    <div id="login" class="block_popup">
-    	<div class="popup">
-        	<a href="#" class="close">Close</a>
-
-            <div class="content">
-            	<div class="title"><p>Enter the site</p></div>
-
-                <div class="form">
-                	<form action="{% url 'login' %}" method="post" />
-                    {% csrf_token %}
-                    	<div class="column">
-                        	<p class="label">Username</p>
-                            <div class="field"><input type="text" name="username" required/></div>
-                        </div>
-
-                        <div class="column">
-                        	<p class="label">Password</p>
-                            <div class="field"><input type="password" name="password" required/></div>
-                        </div>
-
-						<div class="column_2">
-                            <div class="remember">
-                            	<div class="checkbox"><input type="checkbox" /></div>
-                                <div class="remember_label"><p>Remember me</p></div>
-                            </div>
-                        </div>
-
-                        <div class="column_2">
-                            <p class="forgot_pass"><a href="#">Forgot password?</a></p>
-                        </div>
-
-                        <div class="column button">
-                           <input type="submit" class="enter" value="Login"/>
-                        </div>
-
-                        <div class="clearboth"></div>
-                    </form>
-                </div>
-
-                <div class="subtitle"><p>SIGN IN AS A USER</p></div>
-            </div>
-        </div>
-    </div>
-    <!-- POPUP END -->
 </body>
 
 <script>
