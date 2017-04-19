@@ -1,7 +1,5 @@
 {% extends 'blog_base.html' %}
 {% block blog_left_content %}
-{% load pagination_tags %}
-{% autopaginate object_list 5 %}
 <div class="main_content">
 <div class="block_breadcrumbs">
         <div class="text"><p>You are here:</p></div>
@@ -18,10 +16,10 @@
     <div class="line_4" style="margin:0px 0px 0px;"></div>
 
     <div class="block_blog_1">
-        {% if object_list %}
-        {% for article in object_list %}
+        {% if article_list %}
+        {% for article in article_list %}
         <article class="blog_post">
-            <h4 class="title"><a href="{% url 'article' article.id %}">{{ article.title }}</a></h4>
+            <h4 class="title"><a href="{% url 'article' %}?id={{ article.id }}">{{ article.title }}</a></h4>
             <div class="info">
                 <div class="date"><p>{{ article.date_publish | date:'d-M-y' }}</p></div>
                 <div class="author"><p>By: <a href="#">{{ article.user }}</a></p></div>
@@ -47,11 +45,9 @@
             <p>没有相关记录！</p>
         {% endif %}
         </div>
-        <div class="text-center">
-            {% if object_list %}
-            {% paginate %}
-            {% endif %}
-        </div>
+        {% if article_list %}
+        {% include 'pagination.html' %}
+        {% endif %}
     </div>
 </div>
 {% endblock %}
