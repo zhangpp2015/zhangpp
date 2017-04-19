@@ -51,72 +51,72 @@ def global_setting(request):
     return locals()
 
 
-class IndexListView(ListView):
-    model = Article
-    template_name = "blog_index.html"
-
-    def get_queryset(self):
-        queryset = super(IndexListView, self).get_queryset()
-        keywords = self.request.GET.get('keywords', '').strip()
-        self._keywords = keywords
-        if keywords:
-            queryset = queryset.filter(title__icontains=keywords)
-        return queryset
-
-    def get_context_data(self, **kwargs):
-        context = super(IndexListView, self).get_context_data(**kwargs)
-        context['keywords'] = self._keywords
-        return context
-# def index(request):
-#     try:
-#         keywords = request.GET.get('keywords', '').strip()
-#         # 最新文章数据
+# class IndexListView(ListView):
+#     model = Article
+#     template_name = "blog_index.html"
+#
+#     def get_queryset(self):
+#         queryset = super(IndexListView, self).get_queryset()
+#         keywords = self.request.GET.get('keywords', '').strip()
+#         self._keywords = keywords
 #         if keywords:
-#             article_list = getPage(request, Article.objects.filter(title__icontains=keywords))
-#         else:
-#             article_list = getPage(request, Article.objects.all())
-#         #文章归档
-#         #1、先要去获取到文章中有的年份-月份
-#         #Article.objects.values('date_publish').distinct()
-#         # cursor = connection.cursor()
-#         # cursor.execute("SELECT DISTINCT DATE_FORMAT(date_publish, '%Y-%m') as col_date FROM blog_article ORDER BY date_publish")
-#         # row = cursor.fetchall()
-#         # print row
+#             queryset = queryset.filter(title__icontains=keywords)
+#         return queryset
 #
-#     except Exception as e:
-#         pass
-#     return render(request, 'blog_index.html', locals())
-#
-#
-# def archive(request):
-#     try:
-#         #现去获取客户端提交的信息
-#         year = request.GET.get('year', None)
-#         month = request.GET.get('month', None)
-#         article_list = getPage(request, Article.objects.filter(date_publish__icontains=year+'-'+month))
-#     except Exception as e:
-#         pass
-#     return render(request, 'archive.html', locals())
-#
-# def tag(request):
-#     try:
-#         #现去获取客户端提交的信息
-#         tag_id = request.GET.get('tag', None)
-#         article_list = getPage(request, Article.objects.filter(tag=tag_id))
-#         tag_name = Tag.objects.get(id=tag_id)
-#     except Exception as e:
-#         pass
-#     return render(request, 'tag.html', locals())
-#
-# def category(request):
-#     try:
-#         #现去获取客户端提交的信息
-#         category_id = request.GET.get('category', None)
-#         article_list = getPage(request, Article.objects.filter(category=category_id))
-#         category_name = Category.objects.get(id=category_id)
-#     except Exception as e:
-#         pass
-#     return render(request, 'blog_category.html', locals())
+#     def get_context_data(self, **kwargs):
+#         context = super(IndexListView, self).get_context_data(**kwargs)
+#         context['keywords'] = self._keywords
+#         return context
+def index(request):
+    try:
+        keywords = request.GET.get('keywords', '').strip()
+        # 最新文章数据
+        if keywords:
+            article_list = getPage(request, Article.objects.filter(title__icontains=keywords))
+        else:
+            article_list = getPage(request, Article.objects.all())
+        #文章归档
+        #1、先要去获取到文章中有的年份-月份
+        #Article.objects.values('date_publish').distinct()
+        # cursor = connection.cursor()
+        # cursor.execute("SELECT DISTINCT DATE_FORMAT(date_publish, '%Y-%m') as col_date FROM blog_article ORDER BY date_publish")
+        # row = cursor.fetchall()
+        # print row
+
+    except Exception as e:
+        pass
+    return render(request, 'blog_index.html', locals())
+
+
+def archive(request):
+    try:
+        #现去获取客户端提交的信息
+        year = request.GET.get('year', None)
+        month = request.GET.get('month', None)
+        article_list = getPage(request, Article.objects.filter(date_publish__icontains=year+'-'+month))
+    except Exception as e:
+        pass
+    return render(request, 'archive.html', locals())
+
+def tag(request):
+    try:
+        #现去获取客户端提交的信息
+        tag_id = request.GET.get('tag', None)
+        article_list = getPage(request, Article.objects.filter(tag=tag_id))
+        tag_name = Tag.objects.get(id=tag_id)
+    except Exception as e:
+        pass
+    return render(request, 'tag.html', locals())
+
+def category(request):
+    try:
+        #现去获取客户端提交的信息
+        category_id = request.GET.get('category', None)
+        article_list = getPage(request, Article.objects.filter(category=category_id))
+        category_name = Category.objects.get(id=category_id)
+    except Exception as e:
+        pass
+    return render(request, 'blog_category.html', locals())
 
 
 class CategoryListView(ListView):
@@ -132,15 +132,15 @@ class CategoryListView(ListView):
             category_name = Category.objects.get(id=category_id)
         return queryset
 
-# #分页代码
-# def getPage(request, article_list):
-#     paginator = Paginator(article_list, 5)
-#     try:
-#         page = int(request.GET.get('page', 1))
-#         article_list = paginator.page(page)
-#     except (EmptyPage, InvalidPage, PageNotAnInteger):
-#         article_list = paginator.page(1)
-#     return article_list
+#分页代码
+def getPage(request, article_list):
+    paginator = Paginator(article_list, 5)
+    try:
+        page = int(request.GET.get('page', 1))
+        article_list = paginator.page(page)
+    except (EmptyPage, InvalidPage, PageNotAnInteger):
+        article_list = paginator.page(1)
+    return article_list
 
 #文章详情
 def article(request):
