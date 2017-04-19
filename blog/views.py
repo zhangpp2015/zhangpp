@@ -51,22 +51,22 @@ def global_setting(request):
     return locals()
 
 
-# class IndexListView(ListView):
-#     model = Article
-#     template_name = "blog_index.html"
-#
-#     def get_queryset(self):
-#         queryset = super(IndexListView, self).get_queryset()
-#         keywords = self.request.GET.get('keywords', '').strip()
-#         self._keywords = keywords
-#         if keywords:
-#             queryset = queryset.filter(title__icontains=keywords)
-#         return queryset
-#
-#     def get_context_data(self, **kwargs):
-#         context = super(IndexListView, self).get_context_data(**kwargs)
-#         context['keywords'] = self._keywords
-#         return context
+class IndexListView(ListView):
+    model = Article
+    template_name = "blog_index.html"
+
+    def get_queryset(self):
+        queryset = super(IndexListView, self).get_queryset()
+        keywords = self.request.GET.get('keywords', '').strip()
+        self._keywords = keywords
+        if keywords:
+            queryset = queryset.filter(title__icontains=keywords)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(IndexListView, self).get_context_data(**kwargs)
+        context['keywords'] = self._keywords
+        return context
 def index(request):
     try:
         keywords = request.GET.get('keywords', '').strip()
