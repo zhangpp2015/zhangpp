@@ -3,7 +3,7 @@ from blog.views import *
 
 
 urlpatterns = [
-    url(r'^$', IndexListView.as_view(), name='index'),
+    url(r'^$', index, name='index'),
     url(r'^archive$', archive, name='archive'),
     url(r'^tag$', tag, name='tag'),
     url(r'^category$', category, name='category'),
