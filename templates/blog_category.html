@@ -19,7 +19,14 @@
         {% if article_list %}
         {% for article in article_list %}
         <article class="blog_post">
-            <h4 class="title"><a href="{% url 'article' %}?id={{ article.id }}">{{ article.title }}</a></h4>
+            <h4 class="title">
+                {% if article.type %}
+                <p class="pull-left zhuan">转</p>
+                {% else %}
+                <p class="pull-left yuan">原</p>
+                {% endif %}
+                <a href="{% url 'article' %}?id={{ article.id }}">{{ article.title }}</a>
+            </h4>
             <div class="info">
                 <div class="date"><p>{{ article.date_publish | date:'d-M-y' }}</p></div>
                 <div class="author"><p>By: <a href="#">{{ article.user }}</a></p></div>
