@@ -25,7 +25,7 @@
                 {% else %}
                 <p class="pull-left yuan">原</p>
                 {% endif %}
-                <a href="{% url 'article' %}?id={{ article.id }}">{{ article.title }}</a>
+                <a style="margin-left: 20px" href="{% url 'article' %}?id={{ article.id }}">{{ article.title }}</a>
             </h4>
             <div class="info">
                 <div class="date"><p>{{ article.date_publish | date:'d-M-y' }}</p></div>
