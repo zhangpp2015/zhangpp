@@ -282,7 +282,11 @@ APP_SECRET = '7fd6f0911caad04317c280135da8b9ba'
 
 
 # 实例化 WechatBasic
-wechat_instance = WechatBasic(token=WECHAT_TOKEN)
+wechat_instance = WechatBasic(
+    token=WECHAT_TOKEN,
+    appid=APP_ID,
+    appsecret=APP_SECRET
+)
 
 @csrf_exempt
 def wechat(request):
@@ -292,6 +296,10 @@ def wechat(request):
         signature = request.GET.get('signature')
         timestamp = request.GET.get('timestamp')
         nonce = request.GET.get('nonce')
+
+        print signature
+        print timestamp
+        print nonce
 
         if not wechat_instance.check_signature(
                 signature=signature, timestamp=timestamp, nonce=nonce):
