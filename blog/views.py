@@ -335,4 +335,4 @@ def wechat(request):
 
         response = wechat_instance.response_text(content=reply_text)
 
-    return HttpResponse(response, content_type="application/xml")
+        return render(request, 'wechat.html', locals())
