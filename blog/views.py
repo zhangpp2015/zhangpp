@@ -286,7 +286,6 @@ wechat_instance = WechatBasic(
     token=WECHAT_TOKEN,
     appid=APP_ID,
     appsecret=APP_SECRET,
-    encoding_aes_key=ENCODING_AES_KEY,
 )
 
 @csrf_exempt
