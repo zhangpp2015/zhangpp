@@ -42,7 +42,6 @@ INSTALLED_APPS = (
     'blog',
     'pagination',
     'debug_toolbar',
-    'duoshuo',
 )
 
 MIDDLEWARE = [
