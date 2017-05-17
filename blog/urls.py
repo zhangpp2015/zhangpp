@@ -13,4 +13,5 @@ urlpatterns = [
     url(r'^logout', do_logout, name='logout'),
     url(r'^reg', do_reg, name='reg'),
     url(r'^about', about, name='about'),
+    url(r'^wechat', wechat, name='wechat'),
 ]

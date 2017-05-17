@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 import json
 import logging
 from django.shortcuts import render, redirect
@@ -11,6 +12,11 @@ from django.db import connection
 from django.db.models import Count
 from blog.models import *
 from blog.form import *
+from django.http.response import HttpResponse, HttpResponseBadRequest
+from django.views.decorators.csrf import csrf_exempt
+from wechat_sdk.basic import WechatBasic
+from wechat_sdk.exceptions import ParseError
+from wechat_sdk.messages import TextMessage
 
 # logger = logging.getLogger('blog.views')
 # Create your views here.
@@ -268,3 +274,65 @@ def about(request):
     except Exception as e:
         pass
     return render(request, 'blog_about.html', locals())
+
+
+WECHAT_TOKEN = 'zhangpp_chenyang_520'
+APP_ID = 'wx3e9c1483513b4a16'
+APP_SECRET = '7fd6f0911caad04317c280135da8b9ba'
+
+
+# 实例化 WechatBasic
+wechat_instance = WechatBasic(token=WECHAT_TOKEN)
+
+@csrf_exempt
+def wechat(request):
+    if request.method == 'GET':
+        # 检验合法性
+        # 从 request 中提取基本信息 (signature, timestamp, nonce, xml)
+        signature = request.GET.get('signature')
+        timestamp = request.GET.get('timestamp')
+        nonce = request.GET.get('nonce')
+
+        if not wechat_instance.check_signature(
+                signature=signature, timestamp=timestamp, nonce=nonce):
+            return HttpResponseBadRequest('Verify Failed')
+
+        return HttpResponse(
+            request.GET.get('echostr', ''), content_type="text/plain")
+
+    # 解析本次请求的 XML 数据
+    try:
+        wechat_instance.parse_data(data=request.body)
+    except ParseError:
+        return HttpResponseBadRequest('Invalid XML Data')
+
+    # 获取解析好的微信请求信息
+    message = wechat_instance.get_message()
+
+    # 关注事件的默认回复
+    response = wechat_instance.response_text(
+        content=(
+            '感谢您的关注！\n回复【help】查看支持的功能'
+            '\n【<a href="http://www.ddhbblog.sinaapp.com">我的博客</a>】'
+        ))
+
+    if isinstance(message, TextMessage):
+        # 当前会话内容
+        content = message.content.strip()
+        if content == 'help':
+            reply_text = (
+                '目前支持的功能：\n1. 输入【博客】来查看我的博客\n'
+                '2. 回复【随机】来随机展示文章\n'
+                '还有更多功能正在开发中哦 ^_^\n'
+                '【<a href="http://www.ddhbblog.sinaapp.com">我的博客</a>】'
+            )
+        elif content == '博客':
+            reply_text = '我的博客地址是http://www.ddhbblog.sinaapp.com'
+        elif content == '随机':
+            reply_text = '随机功能还在开发中噢,亲可以先查看【<a href="http://www.ddhbblog.sinaapp.com">我的博客</a>】'
+        else:
+            reply_text = '功能还在开发中哦,亲可以提出您宝贵的意见'
+
+        response = wechat_instance.response_text(content=reply_text)
+
+    return HttpResponse(response, content_type="application/xml")
