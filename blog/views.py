@@ -279,13 +279,14 @@ def about(request):
 WECHAT_TOKEN = 'zhangpp_chenyang_520'
 APP_ID = 'wx3e9c1483513b4a16'
 APP_SECRET = '7fd6f0911caad04317c280135da8b9ba'
-
+ENCODING_AES_KEY = 'J7HgzQO0n5HTBs6xtMhlYd6I8VrBt86k1aTO6WIhesL'
 
 # 实例化 WechatBasic
 wechat_instance = WechatBasic(
     token=WECHAT_TOKEN,
     appid=APP_ID,
-    appsecret=APP_SECRET
+    appsecret=APP_SECRET,
+    encoding_aes_key=ENCODING_AES_KEY,
 )
 
 @csrf_exempt
