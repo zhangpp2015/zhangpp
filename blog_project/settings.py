@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'blog',
     'pagination',
     'debug_toolbar',
+    'duoshuo',
 )
 
 MIDDLEWARE = [
@@ -115,8 +116,8 @@ DATABASES = {
     'NAME': 'blog_db',
     'USER': 'root',
     'PASSWORD': 'mysql123',
-    'HOST': '42.51.8.227',
-    'PORT': '3306',
+    'HOST': '127.0.0.1',
+    'PORT': '',
     }
 }
 
