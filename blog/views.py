@@ -73,6 +73,8 @@ def global_setting(request):
 #         context = super(IndexListView, self).get_context_data(**kwargs)
 #         context['keywords'] = self._keywords
 #         return context
+
+logger = logging.getLogger(__name__)
 def index(request):
     try:
         keywords = request.GET.get('keywords', '').strip()
@@ -295,6 +297,9 @@ def wechat(request):
         timestamp = request.GET.get('timestamp')
         nonce = request.GET.get('nonce')
 
+        logger.info(signature)
+        logger.info(timestamp)
+        logger.info(nonce)
         if not wechat_instance.check_signature(signature=signature, timestamp=timestamp, nonce=nonce):
             return HttpResponseBadRequest('Verify Failed')
         else:
