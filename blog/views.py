@@ -297,6 +297,7 @@ def wechat(request):
         timestamp = request.GET.get('timestamp')
         nonce = request.GET.get('nonce')
 
+        print('--------------------------------------------')
         print(signature)
         print(timestamp)
         print(nonce)
