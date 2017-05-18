@@ -300,6 +300,7 @@ def wechat(request):
         logger.info(signature)
         logger.info(timestamp)
         logger.info(nonce)
+        logger.info(wechat_instance.check_signature(signature=signature, timestamp=timestamp, nonce=nonce))
         if not wechat_instance.check_signature(signature=signature, timestamp=timestamp, nonce=nonce):
             return HttpResponseBadRequest('Verify Failed')
         else:
