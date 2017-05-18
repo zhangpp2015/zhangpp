@@ -14,9 +14,9 @@ from blog.models import *
 from blog.form import *
 from django.http.response import HttpResponse, HttpResponseBadRequest
 from django.views.decorators.csrf import csrf_exempt
-from wechat_sdk.basic import WechatBasic
-from wechat_sdk.exceptions import ParseError
-from wechat_sdk.messages import (TextMessage, VoiceMessage, ImageMessage, VideoMessage, LinkMessage, LocationMessage, EventMessage, ShortVideoMessage)
+from wechatpy import parse_message, create_reply
+from wechatpy.utils import check_signature
+from wechatpy.exceptions import InvalidSignatureException
 
 # logger = logging.getLogger('blog.views')
 # Create your views here.
@@ -284,49 +284,20 @@ APP_SECRET = '7fd6f0911caad04317c280135da8b9ba'
 ENCODING_AES_KEY = 'J7HgzQO0n5HTBs6xtMhlYd6I8VrBt86k1aTO6WIhesL'
 
 def wechat(request):
-    # 实例化 WechatBasic
-    wechat_instance = WechatBasic(
-        token=WECHAT_TOKEN,
-        appid=APP_ID,
-        appsecret=APP_SECRET,
-    )
+    signature = request.args.get('signature', '')
+    timestamp = request.args.get('timestamp', '')
+    nonce = request.args.get('nonce', '')
+    echo_str = request.args.get('echostr', '')
+    try:
+        check_signature(WECHAT_TOKEN, signature, timestamp, nonce)
+    except InvalidSignatureException:
+        return HttpResponseBadRequest('Verify Failed')
     if request.method == 'GET':
-        # 检验合法性
-        # 从 request 中提取基本信息 (signature, timestamp, nonce, xml)
-        signature = request.GET.get('signature')
-        timestamp = request.GET.get('timestamp')
-        nonce = request.GET.get('nonce')
-
-        logger.info(signature)
-        logger.info(timestamp)
-        logger.info(nonce)
-        logger.info(wechat_instance.check_signature(signature=signature, timestamp=timestamp, nonce=nonce))
-        if not wechat_instance.check_signature(signature=signature, timestamp=timestamp, nonce=nonce):
-            return HttpResponseBadRequest('Verify Failed')
+        return echo_str
+    else:
+        msg = parse_message(request.data)
+        if msg.type == 'text':
+            reply = create_reply(msg.content, msg)
         else:
-            if request.method == 'GET':
-                response = request.GET.get('echostr', 'error')
-            else:
-                try:
-                    wechat_instance.parse_data(request.body)
-                    message = wechat_instance.get_message()
-                    if isinstance(message, TextMessage):
-                        reply_text = 'text'
-                    elif isinstance(message, VoiceMessage):
-                        reply_text = 'voice'
-                    elif isinstance(message, ImageMessage):
-                        reply_text = 'image'
-                    elif isinstance(message, LinkMessage):
-                        reply_text = 'link'
-                    elif isinstance(message, LocationMessage):
-                        reply_text = 'location'
-                    elif isinstance(message, VideoMessage):
-                        reply_text = 'video'
-                    elif isinstance(message, ShortVideoMessage):
-                        reply_text = 'shortvideo'
-                    else:
-                        reply_text = 'other'
-                    response = wechat_instance.response_text(content=reply_text)
-                except ParseError:
-                    return HttpResponseBadRequest('Invalid XML Data')
-            return HttpResponse(response, content_type="application/xml")
+            reply = create_reply('Sorry, can not handle this for now', msg)
+        return reply.render()
