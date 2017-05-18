@@ -225,7 +225,7 @@ LOGGING = {
         'request_handler': {
             'level': 'DEBUG',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': os.path.join(BASE_DIR + '/logs/script.log'),
+            'filename': os.path.join(BASE_DIR + '/logs/request.log'),
             'maxBytes': 1024*1024*5,
             'backupCount': 5,
             'formatter': 'standard',
@@ -233,7 +233,7 @@ LOGGING = {
         'scprits_handler': {
             'level': 'DEBUG',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': 'log/script.log',
+            'filename': os.path.join(BASE_DIR + '/logs/script.log'),
             'maxBytes': 1024*1024*5,
             'backupCount': 5,
             'formatter': 'standard',
