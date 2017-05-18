@@ -284,10 +284,10 @@ APP_SECRET = '7fd6f0911caad04317c280135da8b9ba'
 ENCODING_AES_KEY = 'J7HgzQO0n5HTBs6xtMhlYd6I8VrBt86k1aTO6WIhesL'
 
 def wechat(request):
-    signature = request.args.get('signature', '')
-    timestamp = request.args.get('timestamp', '')
-    nonce = request.args.get('nonce', '')
-    echo_str = request.args.get('echostr', '')
+    signature = request.GET.get('signature', '')
+    timestamp = request.GET.get('timestamp', '')
+    nonce = request.GET.get('nonce', '')
+    echo_str = request.GET.get('echostr', '')
     try:
         check_signature(WECHAT_TOKEN, signature, timestamp, nonce)
     except InvalidSignatureException:
