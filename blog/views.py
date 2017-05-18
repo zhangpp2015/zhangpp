@@ -290,7 +290,6 @@ wechat_instance = WechatBasic(
 
 @csrf_exempt
 def wechat(request):
-    print(1111111111111111111111111111111)
     if request.method == 'GET':
         # 检验合法性
         # 从 request 中提取基本信息 (signature, timestamp, nonce, xml)
@@ -298,12 +297,9 @@ def wechat(request):
         timestamp = request.GET.get('timestamp')
         nonce = request.GET.get('nonce')
 
-        print('--------------------------------------------')
-        print(signature)
-        print(timestamp)
-        print(nonce)
-
-        print(wechat_instance.check_signature(signature=signature, timestamp=timestamp, nonce=nonce))
+        logging.getLogger('-----------------------------------')
+        logging.getLogger(signature)
+        logging.getLogger(wechat_instance.check_signature(signature=signature, timestamp=timestamp, nonce=nonce))
 
         if not wechat_instance.check_signature(signature=signature, timestamp=timestamp, nonce=nonce):
             return HttpResponseBadRequest('Verify Failed')
