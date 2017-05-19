@@ -303,8 +303,8 @@ def wechat(request):
         logger.info(request.body)
         msg = parse_message(request.body)
         logger.info(msg)
-        if msg.type == 'text':
-            reply = TextReply(content='哈哈哈哈哈哈')
+        if msg.MsgType == 'text':
+            reply = create_reply('success', msg)
         else:
             reply = create_reply('Sorry, can not handle this for now', msg)
         return reply.render()
