@@ -286,7 +286,6 @@ ENCODING_AES_KEY = 'J7HgzQO0n5HTBs6xtMhlYd6I8VrBt86k1aTO6WIhesL'
 
 @csrf_exempt
 def wechat(request):
-    logger.info('11111111111111111111111111111')
     if request.method == 'GET':
         signature = request.GET.get('signature', '')
         timestamp = request.GET.get('timestamp', '')
@@ -300,10 +299,9 @@ def wechat(request):
         logger.info(signature)
         return response
     elif request.method == 'POST':
-        logger.info(request.body)
         msg = parse_message(request.body)
-        logger.info(msg)
-        if msg.MsgType == 'text':
+        logger.info(msg.type)
+        if msg.type == 'text':
             reply = create_reply('success', msg)
         else:
             reply = create_reply('Sorry, can not handle this for now', msg)
