@@ -17,6 +17,7 @@ from django.views.decorators.csrf import csrf_exempt
 from wechatpy import parse_message, create_reply
 from wechatpy.utils import check_signature
 from wechatpy.exceptions import InvalidSignatureException
+from wechatpy.replies import TextReply, ImageReply, VideoReply
 
 # logger = logging.getLogger('blog.views')
 # Create your views here.
@@ -298,7 +299,7 @@ def wechat(request):
     else:
         msg = parse_message(request.data)
         if msg.type == 'text':
-            reply = create_reply(msg.content, msg)
+            reply = TextReply(content='测试测试', message='1234567')
         else:
             reply = create_reply('Sorry, can not handle this for now', msg)
         return reply.render()
