@@ -300,7 +300,7 @@ def wechat(request):
         msg = parse_message(request.body)
         logger.info(msg)
         if msg.type == 'text':
-            reply = TextReply(content='测试测试', message='1234567')
+            reply = create_reply('哈哈哈哈，成功了', msg)
         else:
             reply = create_reply('Sorry, can not handle this for now', msg)
         return reply.render()
