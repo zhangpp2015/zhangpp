@@ -17,7 +17,7 @@ from django.views.decorators.csrf import csrf_exempt
 from wechatpy import parse_message, create_reply
 from wechatpy.utils import check_signature
 from wechatpy.exceptions import InvalidSignatureException
-from wechatpy.replies import TextReply, ImageReply, VideoReply
+from wechatpy import WeChatClient
 
 # logger = logging.getLogger('blog.views')
 # Create your views here.
@@ -286,6 +286,41 @@ ENCODING_AES_KEY = 'J7HgzQO0n5HTBs6xtMhlYd6I8VrBt86k1aTO6WIhesL'
 
 @csrf_exempt
 def wechat(request):
+    client = WeChatClient(APP_ID, APP_SECRET)
+    client.menu.create({
+        "button": [
+            {
+                "type": "click",
+                "name": "今日歌曲",
+                "key": "V1001_TODAY_MUSIC"
+            },
+            {
+                "type": "click",
+                "name": "歌手简介",
+                "key": "V1001_TODAY_SINGER"
+            },
+            {
+                "name": "菜单",
+                "sub_button": [
+                    {
+                        "type": "view",
+                        "name": "搜索",
+                        "url": "http://www.soso.com/"
+                    },
+                    {
+                        "type": "view",
+                        "name": "视频",
+                        "url": "http://v.qq.com/"
+                    },
+                    {
+                        "type": "click",
+                        "name": "赞一下我们",
+                        "key": "V1001_GOOD"
+                    }
+                ]
+            }
+        ]
+    })
     if request.method == 'GET':
         signature = request.GET.get('signature', '')
         timestamp = request.GET.get('timestamp', '')
