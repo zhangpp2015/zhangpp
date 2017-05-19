@@ -294,8 +294,12 @@ def wechat(request):
             check_signature(WECHAT_TOKEN, signature, timestamp, nonce)
         except InvalidSignatureException:
             echo_str = 'error'
-        response = HttpResponse(echo_str, content_type="text/plain")
-        return response
+        msg = parse_message(request.data)
+        if msg.type == 'text':
+            reply = TextReply(content='测试测试111111', message='1234567890')
+        else:
+            reply = create_reply('Sorry, can not handle this for now', msg)
+        return reply.render()
     else:
         msg = parse_message(request.data)
         if msg.type == 'text':
