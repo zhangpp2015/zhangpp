@@ -300,7 +300,7 @@ def wechat(request):
         logger.info(signature)
         return response
     elif request.method == 'POST':
-        logger.info('login post test-------------------->')
+        logger.info(request.body)
         msg = parse_message(request.body)
         logger.info(msg)
         if msg.type == 'text':
