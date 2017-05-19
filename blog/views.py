@@ -302,10 +302,11 @@ def wechat(request):
         msg = parse_message(request.body)
         logger.info(msg.type)
         if msg.type == 'text':
-            reply = TextReply(content='text_reply', message=msg)
+            reply = create_reply('暂不支持文本消息外的其他操作...\r\n回复:xx天气 查询地市天气情况', msg)
             logger.info(reply)
         else:
             reply = create_reply('Sorry, can not handle this for now', msg)
-        return reply.render()
+        response = HttpResponse(reply.render(), content_type="application/xml")
+        return response
     else:
         logger.info('--------------------------------')
