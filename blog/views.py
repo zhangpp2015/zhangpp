@@ -295,6 +295,7 @@ def wechat(request):
         except InvalidSignatureException:
             echo_str = 'error'
         response = HttpResponse(echo_str, content_type="text/plain")
+        logger.info(signature)
         return response
     else:
         logger.info('login post test-------------------->')
