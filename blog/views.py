@@ -285,6 +285,7 @@ APP_SECRET = '7fd6f0911caad04317c280135da8b9ba'
 ENCODING_AES_KEY = 'J7HgzQO0n5HTBs6xtMhlYd6I8VrBt86k1aTO6WIhesL'
 
 def wechat(request):
+    logger.info('11111111111111111111111111111')
     if request.method == 'GET':
         signature = request.GET.get('signature', '')
         timestamp = request.GET.get('timestamp', '')
