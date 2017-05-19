@@ -297,6 +297,7 @@ def wechat(request):
         response = HttpResponse(echo_str, content_type="text/plain")
         return response
     else:
+        logger.info('login post test-------------------->')
         msg = parse_message(request.body)
         logger.info(msg)
         if msg.type == 'text':
