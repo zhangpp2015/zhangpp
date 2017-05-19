@@ -297,7 +297,7 @@ def wechat(request):
         response = HttpResponse(echo_str, content_type="text/plain")
         logger.info(signature)
         return response
-    else:
+    elif request.method == 'POST':
         logger.info('login post test-------------------->')
         msg = parse_message(request.body)
         logger.info(msg)
@@ -306,3 +306,5 @@ def wechat(request):
         else:
             reply = create_reply('Sorry, can not handle this for now', msg)
         return reply.render()
+    else:
+        logger.info('--------------------------------')
