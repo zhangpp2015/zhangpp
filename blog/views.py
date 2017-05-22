@@ -281,7 +281,7 @@ def about(request):
 
 WECHAT_TOKEN = 'zhangpp_chenyang_520'
 APP_ID = 'wx4387ed444737cb3a'
-APP_SECRET = '7fd6f0911caad04317c280135da8b9ba'
+APP_SECRET = '97ddf7c673638aa29d84ee9979aa458b'
 ENCODING_AES_KEY = '97ddf7c673638aa29d84ee9979aa458b'
 
 @csrf_exempt
