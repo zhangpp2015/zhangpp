@@ -313,8 +313,7 @@ def wechat(request):
 @csrf_exempt
 def createMenu():
     client = WeChatClient(APP_ID, APP_SECRET)
-    logger.info(client.menu.get())
-    client.menu.create({
+    result = client.menu.create({
         "button": [
             {
                 "type": "click",
@@ -348,3 +347,6 @@ def createMenu():
             }
         ]
     })
+    logger.info(result)
+    logger.info("menu create success!")
+    logger.info(client.menu.get())
