@@ -286,7 +286,6 @@ ENCODING_AES_KEY = '97ddf7c673638aa29d84ee9979aa458b'
 
 @csrf_exempt
 def wechat(request):
-    createMenu()
     if request.method == 'GET':
         signature = request.GET.get('signature', '')
         timestamp = request.GET.get('timestamp', '')
@@ -297,6 +296,7 @@ def wechat(request):
         except InvalidSignatureException:
             echo_str = 'error'
         response = HttpResponse(echo_str, content_type="text/plain")
+        createMenu()
         return response
     elif request.method == 'POST':
         msg = parse_message(request.body)
@@ -313,7 +313,7 @@ def wechat(request):
 @csrf_exempt
 def createMenu():
     client = WeChatClient(APP_ID, APP_SECRET)
-    result = client.menu.create({
+    client.menu.create({
         "button": [
             {
                 "type": "click",
@@ -325,8 +325,27 @@ def createMenu():
                 "name": "歌手简介",
                 "key": "V1001_TODAY_SINGER"
             },
+            {
+                "name": "菜单",
+                "sub_button": [
+                    {
+                        "type": "view",
+                        "name": "搜索",
+                        "url": "http://www.soso.com/"
+                    },
+                    {
+                        "type": "view",
+                        "name": "视频",
+                        "url": "http://v.qq.com/"
+                    },
+                    {
+                        "type": "click",
+                        "name": "赞一下我们",
+                        "key": "V1001_GOOD"
+                    }
+                ]
+            }
         ]
     })
-    logger.info(result)
     logger.info("menu create success!")
     logger.info(client.menu.get())
