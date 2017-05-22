@@ -286,7 +286,6 @@ ENCODING_AES_KEY = 'J7HgzQO0n5HTBs6xtMhlYd6I8VrBt86k1aTO6WIhesL'
 
 @csrf_exempt
 def wechat(request):
-    menuGet()
     if request.method == 'GET':
         signature = request.GET.get('signature', '')
         timestamp = request.GET.get('timestamp', '')
@@ -311,8 +310,3 @@ def wechat(request):
         return response
     else:
         logger.info('--------------------------------')
-
-def menuGet():
-    client = WeChatClient(APP_ID, APP_SECRET)
-    menu = client.menu.get()
-    logger.info(menu)
