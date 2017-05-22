@@ -303,8 +303,8 @@ def wechat(request):
     elif request.method == 'POST':
         msg = parse_message(request.body)
         if msg.content == '二维码':
-            createCode(client)
-            reply = ImageReply()
+            url = createAndGetCode(client)
+            reply = ImageReply(image=url)
         # if msg.type == 'text':
         #     reply = create_reply('暂不支持文本消息外的其他操作...\r\n回复:xx天气 查询地市天气情况', msg)
         # else:
@@ -354,7 +354,7 @@ def createMenu(client):
     logger.info("menu create success!")
     logger.info(client.menu.get())
 
-def createCode(client):
+def createAndGetCode(client):
     res = client.qrcode.create({
         'expire_seconds': 1800,
         'action_name': 'QR_SCENE',
@@ -362,5 +362,7 @@ def createCode(client):
             'scene': {'scene_id': 123},
         }
     })
-    logger.info(res)
+    url = client.qrcode.get_url(res["ticket"])
+    logger.info(url)
+    return url
 
