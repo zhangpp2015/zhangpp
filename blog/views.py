@@ -284,6 +284,8 @@ APP_ID = 'wx4387ed444737cb3a'
 APP_SECRET = '97ddf7c673638aa29d84ee9979aa458b'
 ENCODING_AES_KEY = '97ddf7c673638aa29d84ee9979aa458b'
 
+client = WeChatClient(APP_ID, APP_SECRET)
+
 @csrf_exempt
 def wechat(request):
     if request.method == 'GET':
@@ -296,14 +298,17 @@ def wechat(request):
         except InvalidSignatureException:
             echo_str = 'error'
         response = HttpResponse(echo_str, content_type="text/plain")
-        createMenu()
+        createMenu(client)
         return response
     elif request.method == 'POST':
         msg = parse_message(request.body)
-        if msg.type == 'text':
-            reply = create_reply('暂不支持文本消息外的其他操作...\r\n回复:xx天气 查询地市天气情况', msg)
-        else:
-            reply = create_reply('Sorry, can not handle this for now', msg)
+        if msg.content == '二维码':
+            createCode(client)
+            reply = ImageReply()
+        # if msg.type == 'text':
+        #     reply = create_reply('暂不支持文本消息外的其他操作...\r\n回复:xx天气 查询地市天气情况', msg)
+        # else:
+        #     reply = create_reply('Sorry, can not handle this for now', msg)
         response = HttpResponse(reply.render(), content_type="application/xml")
         return response
     else:
@@ -311,8 +316,7 @@ def wechat(request):
 
 
 @csrf_exempt
-def createMenu():
-    client = WeChatClient(APP_ID, APP_SECRET)
+def createMenu(client):
     client.menu.create({
         "button": [
             {
@@ -349,3 +353,14 @@ def createMenu():
     })
     logger.info("menu create success!")
     logger.info(client.menu.get())
+
+def createCode(client):
+    res = client.qrcode.create({
+        'expire_seconds': 1800,
+        'action_name': 'QR_SCENE',
+        'action_info': {
+            'scene': {'scene_id': 123},
+        }
+    })
+    logger.info(res)
+
