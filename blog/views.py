@@ -280,12 +280,13 @@ def about(request):
 
 
 WECHAT_TOKEN = 'zhangpp_chenyang_520'
-APP_ID = 'wx3e9c1483513b4a16'
+APP_ID = 'wx4387ed444737cb3a'
 APP_SECRET = '7fd6f0911caad04317c280135da8b9ba'
-ENCODING_AES_KEY = 'J7HgzQO0n5HTBs6xtMhlYd6I8VrBt86k1aTO6WIhesL'
+ENCODING_AES_KEY = '97ddf7c673638aa29d84ee9979aa458b'
 
 @csrf_exempt
 def wechat(request):
+    createMenu()
     if request.method == 'GET':
         signature = request.GET.get('signature', '')
         timestamp = request.GET.get('timestamp', '')
@@ -310,3 +311,41 @@ def wechat(request):
         return response
     else:
         logger.info('--------------------------------')
+
+
+def createMenu():
+    client = WeChatClient(APP_ID, APP_SECRET)
+    client.menu.create({
+        "button": [
+            {
+                "type": "click",
+                "name": "今日歌曲",
+                "key": "V1001_TODAY_MUSIC"
+            },
+            {
+                "type": "click",
+                "name": "歌手简介",
+                "key": "V1001_TODAY_SINGER"
+            },
+            {
+                "name": "菜单",
+                "sub_button": [
+                    {
+                        "type": "view",
+                        "name": "搜索",
+                        "url": "http://www.soso.com/"
+                    },
+                    {
+                        "type": "view",
+                        "name": "视频",
+                        "url": "http://v.qq.com/"
+                    },
+                    {
+                        "type": "click",
+                        "name": "赞一下我们",
+                        "key": "V1001_GOOD"
+                    }
+                ]
+            }
+        ]
+    })
