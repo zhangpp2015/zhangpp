@@ -316,6 +316,7 @@ def wechat(request):
 @csrf_exempt
 def createMenu():
     client = WeChatClient(APP_ID, APP_SECRET)
+    logger.info(client)
     client.menu.create({
         "button": [
             {
