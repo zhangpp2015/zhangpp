@@ -297,14 +297,11 @@ def wechat(request):
         except InvalidSignatureException:
             echo_str = 'error'
         response = HttpResponse(echo_str, content_type="text/plain")
-        logger.info(signature)
         return response
     elif request.method == 'POST':
         msg = parse_message(request.body)
-        logger.info(msg.type)
         if msg.type == 'text':
             reply = create_reply('暂不支持文本消息外的其他操作...\r\n回复:xx天气 查询地市天气情况', msg)
-            logger.info(reply)
         else:
             reply = create_reply('Sorry, can not handle this for now', msg)
         response = HttpResponse(reply.render(), content_type="application/xml")
@@ -316,7 +313,7 @@ def wechat(request):
 @csrf_exempt
 def createMenu():
     client = WeChatClient(APP_ID, APP_SECRET)
-    logger.info(client)
+    logger.info(client.menu.get())
     client.menu.create({
         "button": [
             {
