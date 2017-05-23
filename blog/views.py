@@ -282,7 +282,6 @@ def about(request):
 WECHAT_TOKEN = 'zhangpp_chenyang_520'
 APP_ID = 'wx4387ed444737cb3a'
 APP_SECRET = '97ddf7c673638aa29d84ee9979aa458b'
-ENCODING_AES_KEY = '97ddf7c673638aa29d84ee9979aa458b'
 
 client = WeChatClient(APP_ID, APP_SECRET)
 
@@ -302,13 +301,10 @@ def wechat(request):
         return response
     elif request.method == 'POST':
         msg = parse_message(request.body)
-        if msg.content == '二维码':
-            url = createAndGetCode(client)
-            reply = ImageReply(image=url)
-        # if msg.type == 'text':
-        #     reply = create_reply('暂不支持文本消息外的其他操作...\r\n回复:xx天气 查询地市天气情况', msg)
-        # else:
-        #     reply = create_reply('Sorry, can not handle this for now', msg)
+        if msg.type == 'text':
+            reply = create_reply('hello world', msg)
+        else:
+            reply = create_reply('Sorry, can not handle this for now', msg)
         response = HttpResponse(reply.render(), content_type="application/xml")
         return response
     else:
