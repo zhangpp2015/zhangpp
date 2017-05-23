@@ -297,7 +297,7 @@ def wechat(request):
         except InvalidSignatureException:
             echo_str = 'error'
         response = HttpResponse(echo_str, content_type="text/plain")
-        createMenu(client)
+        # createMenu(client)
         return response
     elif request.method == 'POST':
         msg = parse_message(request.body)
